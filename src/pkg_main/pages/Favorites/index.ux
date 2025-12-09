@@ -1,7 +1,7 @@
 <template>
   <stack class="page">
     <!-- 背景图 -->
-    <image class="bg-img" src="/img/loading-bg.png"></image>
+    <image class="bg-img" src="/pkg_main/img/loading-bg.png"></image>
 
     <!-- 内容区域 -->
     <div class="content">
@@ -44,7 +44,7 @@
 
       <!-- 空状态 -->
       <div class="empty-view" if="{{currentList.length === 0}}">
-        <image class="empty-img" src="/img/kong.png"></image>
+        <image class="empty-img" src="/pkg_main/img/kong.png"></image>
         <text class="empty-text">暂无收藏～</text>
       </div>
     </div>
@@ -114,7 +114,7 @@ export default {
   },
   goToDetail(item) {
     router.push({
-      uri: '/pages/WallpaperDetail',
+      uri: '/pkg_main/pages/WallpaperDetail',
       params: {
         category: item.category,
         initialId: 1,

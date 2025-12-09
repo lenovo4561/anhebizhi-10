@@ -59,7 +59,7 @@ export default {
   },
   goToList(category, title) {
     router.push({
-      uri: '/pages/WallpaperList',
+      uri: '/pkg_main/pages/WallpaperList',
       params: {
         category: category,
         title: title,
@@ -69,7 +69,7 @@ export default {
   },
   goToDetail(category) {
     router.push({
-      uri: '/pages/WallpaperDetail',
+      uri: '/pkg_main/pages/WallpaperDetail',
       params: {
         category: category,
         initialId: 1,

@@ -8,23 +8,23 @@
     <!-- 顶部导航 -->
     <div class="nav-bar" show="{{!isComputer}}">
       <div class="back-btn" @click="goBack">
-        <image class="back-icon" src="/img/back.png"></image>
+        <image class="back-icon" src="/pkg_main/img/back.png"></image>
       </div>
     </div>
 
     <!-- 左右切换箭头 (悬浮) -->
     <div class="arrow-btn left-arrow" @click="prevImage" show="{{!isComputer && currentIndex > 0}}">
-      <image class="arrow-icon" src="/img/zuo.png"></image>
+      <image class="arrow-icon" src="/pkg_main/img/zuo.png"></image>
     </div>
     <div class="arrow-btn right-arrow" @click="nextImage" show="{{!isComputer && currentIndex < totalCount - 1}}">
-      <image class="arrow-icon" src="/img/you.png"></image>
+      <image class="arrow-icon" src="/pkg_main/img/you.png"></image>
     </div>
 
     <!-- 底部操作栏 -->
     <div class="bottom-bar {{isComputer ? 'computer-bottom-bar' : ''}}">
       <!-- 下载按钮 -->
       <div class="action-btn download-btn {{isComputer ? 'computer-btn' : ''}}" @click="downloadWallpaper">
-        <image class="btn-icon" src="/img/xiazai.png"></image>
+        <image class="btn-icon" src="/pkg_main/img/xiazai.png"></image>
         <text class="btn-text">下载</text>
       </div>
 
@@ -32,7 +32,7 @@
       <div class="action-btn favorite-btn {{isComputer ? 'computer-btn' : ''}}" @click="toggleFavorite">
         <image
           class="btn-icon"
-          src="{{isFavorite ? '/img/like-s.png' : '/img/shoucang-u.png'}}"
+          src="{{isFavorite ? '/pkg_main/img/like-s.png' : '/pkg_main/img/shoucang-u.png'}}"
         ></image>
         <text class="btn-text">{{ isFavorite ? '已收藏' : '收藏' }}</text>
       </div>

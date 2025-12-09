@@ -5,7 +5,7 @@
 
 <template>
   <div class="wrapper">
-    <image class="bg" src="/img/loading-bg.png"></image>
+    <image class="bg" src="/pkg_main/img/loading-bg.png"></image>
     <!-- 内容区域 -->
     <div class="content-area">
       <phone-tab class="tab-content" show="{{currentTab === 0}}"></phone-tab>
@@ -17,19 +17,19 @@
     <!-- 底部导航栏 -->
     <div class="tab-bar">
       <div class="tab-item" onclick="switchTab(0)">
-        <image class="tab-icon" src="{{currentTab === 0 ? '/img/shouji-s.png' : '/img/shouji-u.png'}}"></image>
+        <image class="tab-icon" src="{{currentTab === 0 ? '/pkg_main/img/shouji-s.png' : '/pkg_main/img/shouji-u.png'}}"></image>
         <text class="{{currentTab === 0 ? 'tab-text-active' : 'tab-text'}}">手机</text>
       </div>
       <div class="tab-item" onclick="switchTab(1)">
-        <image class="tab-icon" src="{{currentTab === 1 ? '/img/diannao-s.png' : '/img/diannao-u.png'}}"></image>
+        <image class="tab-icon" src="{{currentTab === 1 ? '/pkg_main/img/diannao-s.png' : '/pkg_main/img/diannao-u.png'}}"></image>
         <text class="{{currentTab === 1 ? 'tab-text-active' : 'tab-text'}}">电脑</text>
       </div>
       <div class="tab-item" onclick="switchTab(2)">
-        <image class="tab-icon" src="{{currentTab === 2 ? '/img/shoucang-s.png' : '/img/shoucang-u.png'}}"></image>
+        <image class="tab-icon" src="{{currentTab === 2 ? '/pkg_main/img/shoucang-s.png' : '/pkg_main/img/shoucang-u.png'}}"></image>
         <text class="{{currentTab === 2 ? 'tab-text-active' : 'tab-text'}}">收藏</text>
       </div>
       <div class="tab-item" onclick="switchTab(3)">
-        <image class="tab-icon" src="{{currentTab === 3 ? '/img/mine-s.png' : '/img/mine-u.png'}}"></image>
+        <image class="tab-icon" src="{{currentTab === 3 ? '/pkg_main/img/mine-s.png' : '/pkg_main/img/mine-u.png'}}"></image>
         <text class="{{currentTab === 3 ? 'tab-text-active' : 'tab-text'}}">我的</text>
       </div>
     </div>
@@ -37,9 +37,15 @@
 </template>
 
 <script>
+import { initUser } from '../../helper/init.js'
+
 export default {
   data: {
     currentTab: 0
+  },
+  onInit() {
+    // 在分包首页进行用户初始化
+    initUser()
   },
   onShow() {
     // 当页面显示时，如果当前是收藏tab，触发刷新

@@ -53,66 +53,72 @@
       "pages/Splash": {
         "component": "index"
       },
-      "pages/Home": {
+      "pkg_main/pages/Home": {
         "component": "index"
       },
-      "pages/Phone": {
+      "pkg_main/pages/Phone": {
         "component": "index"
       },
-      "pages/Computer": {
+      "pkg_main/pages/Computer": {
         "component": "index"
       },
-      "pages/Favorites": {
+      "pkg_main/pages/Favorites": {
         "component": "index"
       },
-      "pages/Mine": {
+      "pkg_main/pages/Mine": {
         "component": "index"
       },
-      "pages/Demo": {
+      "pkg_main/pages/Demo": {
         "component": "index"
       },
-      "pages/DemoDetail": {
+      "pkg_main/pages/DemoDetail": {
         "component": "index"
       },
-      "pages/Web": {
+      "pkg_main/pages/Web": {
         "component": "index"
       },
-      "pages/WallpaperList": {
+      "pkg_main/pages/WallpaperList": {
         "component": "index"
       },
-      "pages/WallpaperDetail": {
+      "pkg_main/pages/WallpaperDetail": {
         "component": "index"
       }
     }
   },
+  "subpackages": [
+    {
+      "name": "pkg_main",
+      "resource": "pkg_main"
+    }
+  ],
   "display": {
     "titleBarBackgroundColor": "#f2f2f2",
     "titleBarTextColor": "#414141",
     "menu": true,
     "pages": {
-      "pages/Home": {
-        "titleBar": false
-      },
-      "pages/Mine": {
-        "titleBar": false
-      },
-      "pages/Demo": {
-        "titleBarText": "快应用示例模版",
-        "menu": false
-      },
-      "pages/DemoDetail": {
-        "titleBarText": "详情页"
-      },
       "pages/Splash": {
         "titleBar": false
       },
-      "pages/Web": {
-        "titleBarText": "协议"
-      },
-      "pages/WallpaperList": {
+      "pkg_main/pages/Home": {
         "titleBar": false
       },
-      "pages/WallpaperDetail": {
+      "pkg_main/pages/Mine": {
+        "titleBar": false
+      },
+      "pkg_main/pages/Demo": {
+        "titleBarText": "快应用示例模版",
+        "menu": false
+      },
+      "pkg_main/pages/DemoDetail": {
+        "titleBarText": "详情页"
+      },
+      "pkg_main/pages/Web": {
+        "titleBarText": "协议"
+      },
+      "pkg_main/pages/WallpaperList": {
+        "titleBar": false
+      },
+      "pkg_main/pages/WallpaperDetail": {
         "titleBar": false
       }
     }

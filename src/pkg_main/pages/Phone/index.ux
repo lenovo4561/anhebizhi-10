@@ -1,6 +1,6 @@
 <template>
   <div class="phone-container">
-    <image class="bg" src="/img/loading-bg.png"></image>
+    <image class="bg" src="/pkg_main/img/loading-bg.png"></image>
     
     <list class="scroll-list">
       <!-- 标题 -->
@@ -134,7 +134,7 @@ export default {
   },
   goToList(category, title) {
     router.push({
-      uri: '/pages/WallpaperList',
+      uri: '/pkg_main/pages/WallpaperList',
       params: {
         category: category,
         title: title,
@@ -144,7 +144,7 @@ export default {
   },
   goToDetail(category, index) {
     router.push({
-      uri: '/pages/WallpaperDetail',
+      uri: '/pkg_main/pages/WallpaperDetail',
       params: {
         category: category,
         initialId: index + 1,

@@ -6,23 +6,12 @@
 <script>
 /**
  * 应用级别的配置，供所有页面公用
+ * 为了减小主包大小，初始化逻辑移到分包的 Home 页面
  */
-
-import { initUser } from './helper/init.js'
-
-const $utils = require('./helper/utils').default
-const $apis = require('./helper/apis').default
-
-/* @desc: 注入方法至全局 global,以便页面调用 */
-const hook2global = global.__proto__ || global
-hook2global.$utils = $utils
-hook2global.$apis = $apis
 
 export default {
   onCreate() {
     console.log('App onCreate')
-    // 应用启动时发起初始化请求
-    initUser()
   }
 }
 </script>

@@ -1,11 +1,11 @@
 <template>
   <div class="container">
-    <image class="bg" src="/img/loading-bg.png"></image>
+    <image class="bg" src="/pkg_main/img/loading-bg.png"></image>
 
     <!-- 自定义顶部导航栏 -->
     <div class="title-bar">
       <div class="back-btn" @click="back">
-        <image class="back-icon" src="/img/back.png"></image>
+        <image class="back-icon" src="/pkg_main/img/back.png"></image>
       </div>
       <text class="page-title">{{ title }}</text>
       <div class="placeholder-btn"></div>
@@ -72,7 +72,7 @@ export default {
   },
   viewDetail(item) {
     router.push({
-      uri: '/pages/WallpaperDetail',
+      uri: '/pkg_main/pages/WallpaperDetail',
       params: {
         category: this.category,
         initialId: item.id,

@@ -1,7 +1,7 @@
 <template>
   <stack class="container">
     <!-- Background Image -->
-    <image class="bg-image" src="/img/wode-bg.png"></image>
+    <image class="bg-image" src="/pkg_main/img/wode-bg.png"></image>
     
     <!-- Content Layer -->
     <div class="content">
@@ -12,7 +12,7 @@
 
       <!-- User Info -->
       <div class="user-info">
-        <image class="avatar" src="/img/a.png"></image>
+        <image class="avatar" src="/pkg_main/img/a.png"></image>
         <text class="username">郑文锦</text>
       </div>
 
@@ -22,18 +22,18 @@
         
         <div class="service-item" onclick="openAgreement">
           <div class="item-left">
-            <image class="item-icon" src="/img/yonghuxieyi.png"></image>
+            <image class="item-icon" src="/pkg_main/img/yonghuxieyi.png"></image>
             <text class="item-text">用户协议</text>
           </div>
-          <image class="arrow" src="/img/you.png"></image>
+          <image class="arrow" src="/pkg_main/img/you.png"></image>
         </div>
 
         <div class="service-item" onclick="openPrivacy">
           <div class="item-left">
-            <image class="item-icon" src="/img/yinsizhengce-1.png"></image>
+            <image class="item-icon" src="/pkg_main/img/yinsizhengce-1.png"></image>
             <text class="item-text">隐私政策</text>
           </div>
-          <image class="arrow" src="/img/you.png"></image>
+          <image class="arrow" src="/pkg_main/img/you.png"></image>
         </div>
       </div>
     </div>
@@ -46,7 +46,7 @@ import router from '@system.router'
 export default {
   openAgreement() {
     router.push({
-      uri: 'pages/Web',
+      uri: '/pkg_main/pages/Web',
       params: {
         url: 'https://api.51dsp.cn/index/agreement.do?pn=com.ahbzanhejs.safeandsound',
         title: '用户协议'
@@ -55,7 +55,7 @@ export default {
   },
   openPrivacy() {
     router.push({
-      uri: 'pages/Web',
+      uri: '/pkg_main/pages/Web',
       params: {
         url: 'https://api.51dsp.cn/index/privacy.do?pn=com.ahbzanhejs.safeandsound',
         title: '隐私政策'
