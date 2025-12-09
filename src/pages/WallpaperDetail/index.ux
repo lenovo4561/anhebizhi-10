@@ -2,7 +2,7 @@
   <div class="container">
     <!-- 图片展示区域 (全屏背景) -->
     <div class="image-wrapper {{isComputer ? 'computer-mode' : ''}}" style="{{computerStyle}}">
-      <image class="main-image" src="{{currentUrl}}" object-fit="cover"></image>
+      <image class="main-image" src="{{currentUrl}}" object-fit="{{isComputer ? 'fill' : 'cover'}}"></image>
     </div>
 
     <!-- 顶部导航 -->
@@ -85,11 +85,7 @@ export default {
     },
     computerStyle() {
       if (!this.isComputer) return ''
-      const w = this.windowWidth
-      const h = this.windowHeight
-      // 旋转90度后，容器的宽度要等于屏幕高度，容器的高度要等于屏幕宽度
-      // 这样旋转后才能完全铺满屏幕
-      return `width: ${h}px; height: ${w}px; transform: rotate(90deg); transform-origin: ${w/2}px ${w/2}px; position: absolute; left: 0; top: 0;`
+      return 'width: 100%; height: 100%; top: 0; left: 0;'
     }
   },
   onInit() {
@@ -293,7 +289,6 @@ export default {
 .main-image {
   width: 100%;
   height: 100%;
-  object-fit: cover;
 }
 
 .nav-bar {
@@ -410,7 +405,7 @@ export default {
 }
 
 .computer-mode {
-  /* 样式由 JS 动态计算 */
+  /* 不旋转，直接铺满 */
 }
 
 .computer-bottom-bar {

@@ -29,6 +29,12 @@
     },
     {
       "name": "system.media"
+    },
+    {
+      "name": "system.device"
+    },
+    {
+      "name": "system.app"
     }
   ],
   "permissions": [
