@@ -24,7 +24,7 @@
       </list-item>
 
       <!-- 底部占位 -->
-      <list-item type="spacer" style="height: 40px;"></list-item>
+      <list-item type="spacer" style="height: 9px;"></list-item>
     </list>
   </div>
 </template>
@@ -106,56 +106,56 @@ export default {
 
 /* 顶部导航栏 */
 .title-bar {
-  height: 100px;
-  padding: 0 30px;
+  height: 23px;
+  padding: 0 7px;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
 }
 
 .back-btn {
-  width: 60px;
-  height: 60px;
+  width: 14px;
+  height: 14px;
   justify-content: center;
   align-items: center;
 }
 
 .back-icon {
-  width: 40px;
-  height: 40px;
+  width: 9px;
+  height: 9px;
   object-fit: contain;
 }
 
 .page-title {
-  font-size: 42px;
+  font-size: 10px;
   color: #333333;
   font-weight: bold;
 }
 
 .placeholder-btn {
-  width: 60px;
-  height: 60px;
+  width: 14px;
+  height: 14px;
 }
 
 /* 壁纸列表 */
 .wallpaper-list {
   flex: 1;
   flex-direction: column;
-  padding-top: 20px;
+  padding-top: 5px;
 }
 
 .wallpaper-grid {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
-  padding: 0 30px;
+  padding: 0 7px;
 }
 
 .wallpaper-item {
-  width: 495px;
-  height: 880px;
-  margin-bottom: 30px;
-  border-radius: 20px;
+  width: 115px;
+  height: 204px;
+  margin-bottom: 7px;
+  border-radius: 5px;
   overflow: hidden;
 }
 
@@ -167,6 +167,6 @@ export default {
 
 .computer-item {
   width: 100%;
-  height: 580px;
+  height: 134px;
 }
 </style>

@@ -90,40 +90,40 @@ export default {
 
 .tab-bar {
   position: fixed;
-  bottom: 40px;
+  bottom: 9px;
   left: 0;
   right: 0;
-  margin-left: 16px;
-  margin-right: 16px;
-  height: 140px;
+  margin-left: 4px;
+  margin-right: 4px;
+  height: 32px;
   background-color: #0e1b23;
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-  border-radius: 70px;
+  border-radius: 16px;
 }
 
 .tab-item {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 150px;
+  width: 35px;
 }
 
 .tab-icon {
-  width: 52px;
-  height: 52px;
+  width: 12px;
+  height: 12px;
   object-fit: contain;
-  margin-bottom: 8px;
+  margin-bottom: 2px;
 }
 
 .tab-text {
-  font-size: 26px;
+  font-size: 6px;
   color: #999999;
 }
 
 .tab-text-active {
-  font-size: 26px;
+  font-size: 6px;
   color: #ffffff;
 }
 </style>

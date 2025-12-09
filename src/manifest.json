@@ -44,8 +44,8 @@
   ],
   "template/official": "demo-template",
   "config": {
-    "logLevel": "debug",
-    "designWidth": 1080
+    "logLevel": "off",
+    "designWidth": 250
   },
   "router": {
     "entry": "pages/Splash",

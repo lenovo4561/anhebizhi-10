@@ -89,7 +89,7 @@
       </list-item>
 
       <!-- 底部占位 -->
-      <list-item type="spacer" style="height: 200px;"></list-item>
+      <list-item type="spacer" style="height: 46px;"></list-item>
     </list>
   </div>
 </template>
@@ -174,11 +174,11 @@ export default {
   }
 
   .title {
-    font-size: 48px;
+    font-size: 11px;
     font-weight: bold;
     color: #333333;
     text-align: center;
-    padding: 40px 0;
+    padding: 9px 0;
   }
 
   .title-item {
@@ -193,15 +193,15 @@ export default {
 
   .category-section {
     flex-direction: column;
-    padding: 0 30px;
-    margin-bottom: 40px;
+    padding: 0 7px;
+    margin-bottom: 9px;
   }
 
   .category-header {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 30px;
+    margin-bottom: 7px;
   }
 
   .title-wrap {
@@ -210,25 +210,25 @@ export default {
   }
 
   .title-bar {
-    width: 8px;
-    height: 44px;
+    width: 2px;
+    height: 10px;
     background-color: #3cc2fa;
-    border-radius: 4px;
-    margin-right: 16px;
+    border-radius: 1px;
+    margin-right: 4px;
   }
 
   .category-title {
-    font-size: 42px;
+    font-size: 10px;
     font-weight: bold;
     color: #333333;
   }
 
   .view-all {
-    font-size: 28px;
+    font-size: 6px;
     background-color: #1a1a1a;
     color: #ffffff;
-    padding: 16px 36px;
-    border-radius: 40px;
+    padding: 4px 8px;
+    border-radius: 9px;
   }
 
   .image-grid {
@@ -237,13 +237,13 @@ export default {
   }
 
   .wallpaper-wrap {
-    margin-right: 20px;
+    margin-right: 5px;
   }
 
   .wallpaper-item {
-    width: 230px;
-    height: 306px;
-    border-radius: 20px;
+    width: 53px;
+    height: 71px;
+    border-radius: 5px;
     object-fit: cover;
   }
 </style>

@@ -87,27 +87,27 @@ export default {
 }
 
 .modal-container {
-  width: 800px;
+  width: 185px;
   flex-direction: column;
   align-items: center;
   background-color: #ffffff;
-  border-radius: 40px;
-  padding: 60px;
-  padding-top: 50px;
+  border-radius: 9px;
+  padding: 14px;
+  padding-top: 12px;
 }
 
 .logo {
-  width: 160px;
-  height: 160px;
-  border-radius: 30px;
-  margin-bottom: 20px;
+  width: 37px;
+  height: 37px;
+  border-radius: 7px;
+  margin-bottom: 5px;
 }
 
 .app-name {
-  font-size: 52px;
+  font-size: 12px;
   font-weight: 900;
   color: #000000;
-  margin-bottom: 40px;
+  margin-bottom: 9px;
 }
 
 .agreement-wrap {
@@ -116,20 +116,20 @@ export default {
 }
 
 .title {
-  font-size: 48px;
+  font-size: 11px;
   font-weight: bold;
   color: #1a1a1a;
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 7px;
 }
 
 .agreement-content {
-  margin-bottom: 40px;
+  margin-bottom: 9px;
 }
 
 .context {
-  font-size: 36px;
-  line-height: 60px;
+  font-size: 8px;
+  line-height: 14px;
   color: #333333;
 }
 
@@ -145,13 +145,13 @@ export default {
   width: 100%;
   flex-direction: column;
   align-items: center;
-  margin-top: 20px;
+  margin-top: 5px;
 }
 
 .btn {
   width: 100%;
-  height: 116px;
-  border-radius: 60px;
+  height: 27px;
+  border-radius: 14px;
   text-align: center;
   justify-content: center;
   align-items: center;
@@ -159,7 +159,7 @@ export default {
 
 .confirm-btn {
   background-color: #3cc2fa;
-  margin-bottom: 28px;
+  margin-bottom: 6px;
 }
 
 .reject-btn {
@@ -167,13 +167,13 @@ export default {
 }
 
 .btn-text-white {
-  font-size: 44px;
+  font-size: 10px;
   font-weight: bold;
   color: #ffffff;
 }
 
 .btn-text-gray {
-  font-size: 44px;
+  font-size: 10px;
   font-weight: bold;
   color: #666666;
 }
