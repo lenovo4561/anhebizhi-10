@@ -1,0 +1,117 @@
+{
+  "package": "com.ahbzanhejs.safeandsound",
+  "name": "安和壁纸",
+  "versionName": "1.0.0",
+  "versionCode": 1,
+  "minPlatformVersion": 1121,
+  "icon": "/assets/images/logo.png",
+  "features": [
+    {
+      "name": "system.prompt"
+    },
+    {
+      "name": "system.router"
+    },
+    {
+      "name": "system.shortcut"
+    },
+    {
+      "name": "system.fetch"
+    },
+    {
+      "name": "system.storage"
+    },
+    {
+      "name": "system.webview"
+    },
+    {
+      "name": "system.request"
+    },
+    {
+      "name": "system.media"
+    }
+  ],
+  "permissions": [
+    {
+      "origin": "*"
+    }
+  ],
+  "template/official": "demo-template",
+  "config": {
+    "logLevel": "debug",
+    "designWidth": 1080
+  },
+  "router": {
+    "entry": "pages/Splash",
+    "pages": {
+      "pages/Splash": {
+        "component": "index"
+      },
+      "pages/Home": {
+        "component": "index"
+      },
+      "pages/Phone": {
+        "component": "index"
+      },
+      "pages/Computer": {
+        "component": "index"
+      },
+      "pages/Favorites": {
+        "component": "index"
+      },
+      "pages/Mine": {
+        "component": "index"
+      },
+      "pages/Demo": {
+        "component": "index"
+      },
+      "pages/DemoDetail": {
+        "component": "index"
+      },
+      "pages/Web": {
+        "component": "index"
+      },
+      "pages/WallpaperList": {
+        "component": "index"
+      },
+      "pages/WallpaperDetail": {
+        "component": "index"
+      }
+    }
+  },
+  "display": {
+    "titleBarBackgroundColor": "#f2f2f2",
+    "titleBarTextColor": "#414141",
+    "menu": true,
+    "pages": {
+      "pages/Home": {
+        "titleBar": false
+      },
+      "pages/Mine": {
+        "titleBar": false
+      },
+      "pages/Demo": {
+        "titleBarText": "快应用示例模版",
+        "menu": false
+      },
+      "pages/DemoDetail": {
+        "titleBarText": "详情页"
+      },
+      "pages/Splash": {
+        "titleBar": false
+      },
+      "pages/Web": {
+        "titleBarText": "协议"
+      },
+      "pages/WallpaperList": {
+        "titleBar": false
+      },
+      "pages/WallpaperDetail": {
+        "titleBar": false
+      }
+    }
+  },
+  "deviceTypeList": [
+    "phone"
+  ]
+}

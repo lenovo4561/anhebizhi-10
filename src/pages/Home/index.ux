@@ -1,0 +1,129 @@
+<import name="phone-tab" src="../Phone/index.ux"></import>
+<import name="computer-tab" src="../Computer/index.ux"></import>
+<import name="favorites-tab" src="../Favorites/index.ux"></import>
+<import name="mine-tab" src="../Mine/index.ux"></import>
+
+<template>
+  <div class="wrapper">
+    <image class="bg" src="/img/loading-bg.png"></image>
+    <!-- 内容区域 -->
+    <div class="content-area">
+      <phone-tab class="tab-content" show="{{currentTab === 0}}"></phone-tab>
+      <computer-tab class="tab-content" show="{{currentTab === 1}}"></computer-tab>
+      <favorites-tab class="tab-content" show="{{currentTab === 2}}"></favorites-tab>
+      <mine-tab class="tab-content" show="{{currentTab === 3}}"></mine-tab>
+    </div>
+
+    <!-- 底部导航栏 -->
+    <div class="tab-bar">
+      <div class="tab-item" onclick="switchTab(0)">
+        <image class="tab-icon" src="{{currentTab === 0 ? '/img/shouji-s.png' : '/img/shouji-u.png'}}"></image>
+        <text class="{{currentTab === 0 ? 'tab-text-active' : 'tab-text'}}">手机</text>
+      </div>
+      <div class="tab-item" onclick="switchTab(1)">
+        <image class="tab-icon" src="{{currentTab === 1 ? '/img/diannao-s.png' : '/img/diannao-u.png'}}"></image>
+        <text class="{{currentTab === 1 ? 'tab-text-active' : 'tab-text'}}">电脑</text>
+      </div>
+      <div class="tab-item" onclick="switchTab(2)">
+        <image class="tab-icon" src="{{currentTab === 2 ? '/img/shoucang-s.png' : '/img/shoucang-u.png'}}"></image>
+        <text class="{{currentTab === 2 ? 'tab-text-active' : 'tab-text'}}">收藏</text>
+      </div>
+      <div class="tab-item" onclick="switchTab(3)">
+        <image class="tab-icon" src="{{currentTab === 3 ? '/img/mine-s.png' : '/img/mine-u.png'}}"></image>
+        <text class="{{currentTab === 3 ? 'tab-text-active' : 'tab-text'}}">我的</text>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  data: {
+    currentTab: 0
+  },
+  onShow() {
+    // 当页面显示时，如果当前是收藏tab，触发刷新
+    if (this.currentTab === 2) {
+      this.$broadcast('refreshFavorites')
+    }
+  },
+  switchTab(index) {
+    this.currentTab = index
+  }
+}
+</script>
+
+<style>
+.wrapper {
+  flex: 1;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+.bg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.content-area {
+  flex: 1;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.tab-content {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.tab-bar {
+  position: fixed;
+  bottom: 40px;
+  left: 0;
+  right: 0;
+  margin-left: 16px;
+  margin-right: 16px;
+  height: 140px;
+  background-color: #0e1b23;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  border-radius: 70px;
+}
+
+.tab-item {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 150px;
+}
+
+.tab-icon {
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+  margin-bottom: 8px;
+}
+
+.tab-text {
+  font-size: 26px;
+  color: #999999;
+}
+
+.tab-text-active {
+  font-size: 26px;
+  color: #ffffff;
+}
+</style>

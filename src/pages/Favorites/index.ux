@@ -1,0 +1,251 @@
+<template>
+  <stack class="page">
+    <!-- 背景图 -->
+    <image class="bg-img" src="/img/loading-bg.png"></image>
+
+    <!-- 内容区域 -->
+    <div class="content">
+      <!-- 标题栏 -->
+      <div class="header-bar">
+        <text class="header-title">收藏</text>
+      </div>
+
+      <!-- Tab 切换 -->
+      <div class="tabs-wrapper">
+        <div class="tabs-container">
+          <div
+            class="tab-item {{currentTab === 0 ? 'tab-active' : ''}}"
+            onclick="switchTab(0)"
+          >
+            <text class="tab-text {{currentTab === 0 ? 'text-active' : ''}}">手机壁纸</text>
+          </div>
+          <div
+            class="tab-item {{currentTab === 1 ? 'tab-active' : ''}}"
+            onclick="switchTab(1)"
+          >
+            <text class="tab-text {{currentTab === 1 ? 'text-active' : ''}}">电脑壁纸</text>
+          </div>
+        </div>
+      </div>
+
+      <!-- 列表区域 -->
+      <list class="list-view" if="{{currentList.length > 0}}">
+        <list-item type="wallpapers" class="grid-container">
+          <div
+            class="grid-item"
+            for="{{currentList}}"
+            onclick="goToDetail($item)"
+          >
+            <image class="item-img" src="{{$item.url}}"></image>
+          </div>
+        </list-item>
+        <list-item type="spacer" class="spacer"></list-item>
+      </list>
+
+      <!-- 空状态 -->
+      <div class="empty-view" if="{{currentList.length === 0}}">
+        <image class="empty-img" src="/img/kong.png"></image>
+        <text class="empty-text">暂无收藏～</text>
+      </div>
+    </div>
+  </stack>
+</template>
+
+<script>
+import storage from '@system.storage'
+import router from '@system.router'
+
+export default {
+  props: ['show'],
+  data() {
+    return {
+      currentTab: 0,
+      phoneFavorites: [],
+      computerFavorites: [],
+    }
+  },
+  computed: {
+    currentList() {
+      const list = this.currentTab === 0 ? this.phoneFavorites : this.computerFavorites
+      // 按时间倒序排序，最新收藏的在前面
+      return [...list].sort((a, b) => b.timestamp - a.timestamp)
+    }
+  },
+  onInit() {
+    this.loadFavorites()
+    // 监听 show 属性变化
+    this.$watch('show', 'onShowChange')
+    // 监听广播事件
+    this.$on('refreshFavorites', () => {
+      console.log('Received refreshFavorites event')
+      this.loadFavorites()
+    })
+  },
+  onShowChange(newVal) {
+    if (newVal) {
+      this.loadFavorites()
+    }
+  },
+  onShow() {
+    this.loadFavorites()
+  },
+  switchTab(index) {
+    this.currentTab = index
+  },
+  loadFavorites() {
+    storage.get({
+      key: 'wallpaper_favorites',
+      success: data => {
+        console.log('Loaded favorites data:', data)
+        const favorites = JSON.parse(data || '[]')
+        // 根据type字段判断是手机还是电脑壁纸
+        // 如果没有type字段，默认是手机壁纸
+        this.phoneFavorites = favorites.filter(item => !item.type || item.type === 'phone')
+        this.computerFavorites = favorites.filter(item => item.type === 'computer')
+        console.log('Phone favorites:', this.phoneFavorites.length)
+        console.log('Computer favorites:', this.computerFavorites.length)
+      },
+      fail: (data, code) => {
+        console.log('Load favorites failed:', data, code)
+        this.phoneFavorites = []
+        this.computerFavorites = []
+      }
+    })
+  },
+  goToDetail(item) {
+    router.push({
+      uri: '/pages/WallpaperDetail',
+      params: {
+        category: item.category,
+        initialId: 1,
+        type: item.type || 'phone',
+        favoriteUrl: item.url
+      }
+    })
+  }
+}
+</script>
+
+<style>
+.page {
+  width: 100%;
+  height: 100%;
+}
+
+.bg-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.content {
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+}
+
+.header-bar {
+  height: 80px;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.header-title {
+  font-size: 36px;
+  font-weight: bold;
+  color: #333333;
+}
+
+.tabs-wrapper {
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+.tabs-container {
+  width: 600px;
+  height: 100px;
+  background-color: #ffffff;
+  border-radius: 50px;
+  flex-direction: row;
+  padding: 8px;
+}
+
+.tab-item {
+  flex: 1;
+  height: 84px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 42px;
+}
+
+.tab-active {
+  background-color: #6ee7f0;
+}
+
+.tab-text {
+  font-size: 32px;
+  color: #666666;
+}
+
+.text-active {
+  color: #333333;
+  font-weight: bold;
+}
+
+.list-view {
+  flex: 1;
+  width: 100%;
+}
+
+.grid-container {
+  width: 100%;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+.grid-item {
+  width: 500px;
+  height: 670px;
+  margin-bottom: 20px;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.item-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  object-fit: cover;
+}
+
+.spacer {
+  height: 200px;
+}
+
+.empty-view {
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.empty-img {
+  width: 300px;
+  height: 270px;
+  object-fit: contain;
+}
+
+.empty-text {
+  font-size: 28px;
+  color: #999999;
+  margin-top: 20px;
+}
+</style>

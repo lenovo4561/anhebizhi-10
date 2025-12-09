@@ -1,0 +1,428 @@
+<template>
+  <div class="container">
+    <!-- 图片展示区域 (全屏背景) -->
+    <div class="image-wrapper {{isComputer ? 'computer-mode' : ''}}" style="{{computerStyle}}">
+      <image class="main-image" src="{{currentUrl}}" object-fit="cover"></image>
+    </div>
+
+    <!-- 顶部导航 -->
+    <div class="nav-bar" show="{{!isComputer}}">
+      <div class="back-btn" @click="goBack">
+        <image class="back-icon" src="/img/back.png"></image>
+      </div>
+    </div>
+
+    <!-- 左右切换箭头 (悬浮) -->
+    <div class="arrow-btn left-arrow" @click="prevImage" show="{{!isComputer && currentIndex > 0}}">
+      <image class="arrow-icon" src="/img/zuo.png"></image>
+    </div>
+    <div class="arrow-btn right-arrow" @click="nextImage" show="{{!isComputer && currentIndex < totalCount - 1}}">
+      <image class="arrow-icon" src="/img/you.png"></image>
+    </div>
+
+    <!-- 底部操作栏 -->
+    <div class="bottom-bar {{isComputer ? 'computer-bottom-bar' : ''}}">
+      <!-- 下载按钮 -->
+      <div class="action-btn download-btn {{isComputer ? 'computer-btn' : ''}}" @click="downloadWallpaper">
+        <image class="btn-icon" src="/img/xiazai.png"></image>
+        <text class="btn-text">下载</text>
+      </div>
+
+      <!-- 收藏按钮 -->
+      <div class="action-btn favorite-btn {{isComputer ? 'computer-btn' : ''}}" @click="toggleFavorite">
+        <image
+          class="btn-icon"
+          src="{{isFavorite ? '/img/like-s.png' : '/img/shoucang-u.png'}}"
+        ></image>
+        <text class="btn-text">{{ isFavorite ? '已收藏' : '收藏' }}</text>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import router from '@system.router'
+import prompt from '@system.prompt'
+import storage from '@system.storage'
+import request from '@system.request'
+import media from '@system.media'
+import device from '@system.device'
+
+const BASE_URL_PHONE = 'https://cdn.shijinzhuang.com/ahbz/sjbz'
+const BASE_URL_COMPUTER = 'https://cdn.shijinzhuang.com/ahbz/dnbz'
+
+const CATEGORY_CONFIG = {
+  'rm': { path: 'rm', count: 20 },
+  'dm': { path: 'dm', count: 20 },
+  'mc': { path: 'mc', count: 20 },
+  'rw': { path: 'rw', count: 20 },
+  'zr': { path: 'zr', count: 20 }
+}
+
+export default {
+  protected: {
+    category: 'rm',
+    initialId: 1,
+    type: 'phone'
+  },
+  private: {
+    wallpapers: [],
+    currentIndex: 0,
+    totalCount: 0,
+    isFavorite: false,
+    windowWidth: 1080,
+    windowHeight: 1920
+  },
+  computed: {
+    currentUrl() {
+      if (this.wallpapers.length > 0 && this.wallpapers[this.currentIndex]) {
+        return this.wallpapers[this.currentIndex].url
+      }
+      return ''
+    },
+    isComputer() {
+      return this.type === 'computer'
+    },
+    computerStyle() {
+      if (!this.isComputer) return ''
+      const w = this.windowWidth
+      const h = this.windowHeight
+      // 旋转90度后，容器的宽度要等于屏幕高度，容器的高度要等于屏幕宽度
+      // 这样旋转后才能完全铺满屏幕
+      return `width: ${h}px; height: ${w}px; transform: rotate(90deg); transform-origin: ${w/2}px ${w/2}px; position: absolute; left: 0; top: 0;`
+    }
+  },
+  onInit() {
+    this.generateWallpapers()
+    // Find index based on initialId
+    const index = this.wallpapers.findIndex(item => item.id == this.initialId)
+    if (index !== -1) {
+      this.currentIndex = index
+    }
+    this.checkIfFavorite()
+
+    device.getInfo({
+      success: (ret) => {
+        this.windowWidth = ret.windowWidth
+        this.windowHeight = ret.windowHeight
+      }
+    })
+  },
+  generateWallpapers() {
+    const config = CATEGORY_CONFIG[this.category]
+    if (!config) {
+      // Fallback if category not found
+      this.wallpapers = []
+      this.totalCount = 0
+      return
+    }
+    
+    const baseUrl = this.type === 'computer' ? BASE_URL_COMPUTER : BASE_URL_PHONE
+    const list = []
+    for (let i = 1; i <= config.count; i++) {
+      list.push({
+        id: i,
+        url: `${baseUrl}/${config.path}/${i}.jpg`
+      })
+    }
+    this.wallpapers = list
+    this.totalCount = list.length
+  },
+  goBack() {
+    router.back()
+  },
+  prevImage() {
+    if (this.currentIndex > 0) {
+      this.currentIndex--
+      this.checkIfFavorite()
+    }
+  },
+  nextImage() {
+    if (this.currentIndex < this.totalCount - 1) {
+      this.currentIndex++
+      this.checkIfFavorite()
+    }
+  },
+  checkIfFavorite() {
+    const currentUrl = this.currentUrl
+    if (!currentUrl) return
+
+    storage.get({
+      key: 'wallpaper_favorites',
+      success: data => {
+        const favorites = JSON.parse(data || '[]')
+        this.isFavorite = favorites.some(item => item.url === currentUrl)
+      },
+      fail: () => {
+        this.isFavorite = false
+      }
+    })
+  },
+  toggleFavorite() {
+    const currentUrl = this.currentUrl
+    if (!currentUrl) return
+
+    storage.get({
+      key: 'wallpaper_favorites',
+      success: data => {
+        let favorites = JSON.parse(data || '[]')
+        const index = favorites.findIndex(
+          item => item.url === currentUrl
+        )
+
+        if (index > -1) {
+          // Remove from favorites
+          favorites.splice(index, 1)
+          this.isFavorite = false
+          prompt.showToast({
+            message: '已取消收藏'
+          })
+        } else {
+          // Add to favorites
+          favorites.push({
+            url: currentUrl,
+            category: this.category,
+            type: this.type,
+            timestamp: Date.now()
+          })
+          this.isFavorite = true
+          prompt.showToast({
+            message: '已添加到收藏'
+          })
+        }
+
+        // Save to storage
+        storage.set({
+          key: 'wallpaper_favorites',
+          value: JSON.stringify(favorites)
+        })
+      },
+      fail: () => {
+        // First time
+        const favorites = [
+          {
+            url: currentUrl,
+            category: this.category,
+            type: this.type,
+            timestamp: Date.now()
+          }
+        ]
+        this.isFavorite = true
+        storage.set({
+          key: 'wallpaper_favorites',
+          value: JSON.stringify(favorites)
+        })
+        prompt.showToast({
+          message: '已添加到收藏'
+        })
+      }
+    })
+  },
+  downloadWallpaper() {
+    const self = this
+    const currentUrl = this.currentUrl
+    if (!currentUrl) return
+
+    prompt.showToast({
+      message: '开始下载...'
+    })
+
+    // Encode URL
+    const encodedUrl = currentUrl.replace(/\s/g, '%20')
+
+    request.download({
+      url: encodedUrl,
+      success: function(data) {
+        console.info('Download success, token:', data.token)
+        request.onDownloadComplete({
+          token: data.token,
+          success: function(ret) {
+            console.info('Download complete, path:', ret.uri)
+            media.saveToPhotosAlbum({
+              uri: ret.uri,
+              success: function() {
+                prompt.showToast({
+                  message: '下载成功'
+                })
+              },
+              fail: function(data, code) {
+                console.error('Save to album failed:', data, code)
+                prompt.showToast({
+                  message: '保存失败，请检查权限'
+                })
+              }
+            })
+          },
+          fail: function(data, code) {
+            console.error('Download complete check failed:', data, code)
+            prompt.showToast({
+              message: '下载失败'
+            })
+          }
+        })
+      },
+      fail: function(data, code) {
+        console.error('Download request failed:', data, code)
+        prompt.showToast({
+          message: '下载请求失败: ' + code
+        })
+      }
+    })
+  }
+}
+</script>
+
+<style>
+.container {
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background-color: #000000;
+}
+
+.image-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.nav-bar {
+  height: 100px;
+  padding-top: 40px;
+  padding-left: 20px;
+  padding-right: 20px;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+}
+
+.back-btn {
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+  background-color: rgba(255, 255, 255, 0.3);
+  justify-content: center;
+  align-items: center;
+}
+
+.back-icon {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+}
+
+.page-indicator {
+  background-color: rgba(255, 255, 255, 0.3);
+  padding: 10px 20px;
+  border-radius: 10px;
+}
+
+.page-num {
+  color: #ffffff;
+  font-size: 30px;
+}
+
+.placeholder-btn {
+  width: 60px;
+}
+
+.arrow-btn {
+  position: absolute;
+  top: 50%;
+  margin-top: -40px;
+  width: 80px;
+  height: 80px;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 40px;
+  z-index: 20;
+}
+
+.left-arrow {
+  left: 20px;
+}
+
+.right-arrow {
+  right: 20px;
+}
+
+.arrow-icon {
+  width: 40px;
+  height: 40px;
+}
+
+.bottom-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 150px;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #ffffff;
+  z-index: 10;
+}
+
+.action-btn {
+  width: 300px;
+  height: 90px;
+  border-radius: 45px;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.download-btn {
+  background-color: #9bfad9;
+}
+
+.favorite-btn {
+  background-color: #9bfad9;
+}
+
+.btn-icon {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+}
+
+.btn-text {
+  font-size: 32px;
+  color: #000000;
+  font-weight: bold;
+}
+
+.computer-mode {
+  /* 样式由 JS 动态计算 */
+}
+
+.computer-bottom-bar {
+  background-color: #ffffff;
+  height: 180px;
+  padding-bottom: 40px;
+}
+
+.computer-btn {
+  width: 420px;
+  height: 100px;
+  border-radius: 50px;
+  background-color: #9bfad9;
+}
+</style>

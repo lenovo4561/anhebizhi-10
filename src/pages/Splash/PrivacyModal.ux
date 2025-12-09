@@ -1,0 +1,180 @@
+<template>
+  <div class="wrapper">
+    <div class="mask" if="{{show}}">
+      <div class="modal-container">
+        <image class="logo" src="/img/logo.png"></image>
+        <text class="app-name">安和壁纸</text>
+
+        <div class="agreement-wrap">
+          <text class="title">用户协议及隐私政策</text>
+          <div class="agreement-content">
+            <text class="context">
+              <span>尊敬的用户：欢迎使用"</span
+              ><span class="highlight">安和壁纸</span
+              ><span>"，在您使用前请仔细阅读</span
+              ><a class="link" @click="openPrivacy">《隐私政策》</a
+              ><span>和</span
+              ><a class="link" @click="openAgreement">《用户协议》</a
+              ><span
+                >，我们将严格遵守您同意的各项条款使用您的信息，以便为您提供更好的服务。点击"同意"意味着您自愿遵守相关政策，我们将严格保护您的个人信息，确保信息安全。</span
+              >
+            </text>
+          </div>
+          <div class="btn-group">
+            <div class="btn confirm-btn" @click="agree">
+              <text class="btn-text-white">同意并继续</text>
+            </div>
+            <div class="btn reject-btn" @click="refuse">
+              <text class="btn-text-gray">不同意</text>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import router from '@system.router'
+
+export default {
+  props: ['show'],
+  data: {},
+  agree() {
+    this.$emit('agreeEvt')
+  },
+  refuse() {
+    this.$app.exit()
+  },
+  openAgreement() {
+    router.push({
+      uri: '/pages/Web',
+      params: {
+        url: 'https://api.51dsp.cn/index/agreement.do?pn=com.ahbzanhejs.safeandsound',
+        title: '用户协议'
+      }
+    })
+  },
+  openPrivacy() {
+    router.push({
+      uri: '/pages/Web',
+      params: {
+        url: 'https://api.51dsp.cn/index/privacy.do?pn=com.ahbzanhejs.safeandsound',
+        title: '隐私政策'
+      }
+    })
+  }
+}
+</script>
+
+<style>
+.wrapper {
+  width: 0;
+  height: 0;
+}
+
+.mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-container {
+  width: 800px;
+  flex-direction: column;
+  align-items: center;
+  background-color: #ffffff;
+  border-radius: 40px;
+  padding: 60px;
+  padding-top: 50px;
+}
+
+.logo {
+  width: 160px;
+  height: 160px;
+  border-radius: 30px;
+  margin-bottom: 20px;
+}
+
+.app-name {
+  font-size: 52px;
+  font-weight: 900;
+  color: #000000;
+  margin-bottom: 40px;
+}
+
+.agreement-wrap {
+  width: 100%;
+  flex-direction: column;
+}
+
+.title {
+  font-size: 48px;
+  font-weight: bold;
+  color: #1a1a1a;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.agreement-content {
+  margin-bottom: 40px;
+}
+
+.context {
+  font-size: 36px;
+  line-height: 60px;
+  color: #333333;
+}
+
+.link {
+  color: #1976d2;
+}
+
+.highlight {
+  color: #1976d2;
+}
+
+.btn-group {
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.btn {
+  width: 100%;
+  height: 116px;
+  border-radius: 60px;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.confirm-btn {
+  background-color: #3cc2fa;
+  margin-bottom: 28px;
+}
+
+.reject-btn {
+  background-color: #f5f5f5;
+}
+
+.btn-text-white {
+  font-size: 44px;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.btn-text-gray {
+  font-size: 44px;
+  font-weight: bold;
+  color: #666666;
+}
+</style>

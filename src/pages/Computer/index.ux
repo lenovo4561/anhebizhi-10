@@ -1,0 +1,161 @@
+<template>
+  <div class="computer-container">
+    <list class="scroll-list">
+      <!-- 标题 -->
+      <list-item type="title" class="title-item">
+        <text class="title">电脑壁纸</text>
+      </list-item>
+
+      <!-- 分类列表 -->
+      <list-item type="category" class="category-section" for="{{categories}}">
+        <div class="category-header">
+          <div class="title-wrap">
+            <div class="title-bar"></div>
+            <text class="category-title">{{$item.title}}</text>
+          </div>
+          <text class="view-all" onclick="goToList($item.type, $item.title)">查看全部</text>
+        </div>
+        <image class="category-image" src="{{$item.image}}" onclick="goToDetail($item.type)"></image>
+      </list-item>
+
+      <!-- 底部占位 -->
+      <list-item type="footer" class="footer-spacer"></list-item>
+    </list>
+  </div>
+</template>
+
+<script>
+import router from '@system.router'
+
+export default {
+  data: {
+    categories: [
+      {
+        title: '热门壁纸',
+        type: 'rm',
+        image: 'https://cdn.shijinzhuang.com/ahbz/dnbz/rm/1.jpg'
+      },
+      {
+        title: '动漫壁纸',
+        type: 'dm',
+        image: 'https://cdn.shijinzhuang.com/ahbz/dnbz/dm/1.jpg'
+      },
+      {
+        title: '萌宠壁纸',
+        type: 'mc',
+        image: 'https://cdn.shijinzhuang.com/ahbz/dnbz/mc/1.jpg'
+      },
+      {
+        title: '人物壁纸',
+        type: 'rw',
+        image: 'https://cdn.shijinzhuang.com/ahbz/dnbz/rw/1.jpg'
+      },
+      {
+        title: '自然壁纸',
+        type: 'zr',
+        image: 'https://cdn.shijinzhuang.com/ahbz/dnbz/zr/1.jpg'
+      }
+    ]
+  },
+  goToList(category, title) {
+    router.push({
+      uri: '/pages/WallpaperList',
+      params: {
+        category: category,
+        title: title,
+        type: 'computer'
+      }
+    })
+  },
+  goToDetail(category) {
+    router.push({
+      uri: '/pages/WallpaperDetail',
+      params: {
+        category: category,
+        initialId: 1,
+        type: 'computer'
+      }
+    })
+  }
+}
+</script>
+
+<style>
+  .computer-container {
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+  }
+
+  .scroll-list {
+    flex: 1;
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+  .title-item {
+    height: 100px;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .title {
+    font-size: 36px;
+    color: #000000;
+    font-weight: bold;
+  }
+
+  .category-section {
+    flex-direction: column;
+    margin-bottom: 40px;
+  }
+
+  .category-header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .title-wrap {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .title-bar {
+    width: 8px;
+    height: 32px;
+    background-color: #40E0D0;
+    border-radius: 4px;
+    margin-right: 16px;
+  }
+
+  .category-title {
+    font-size: 32px;
+    font-weight: bold;
+    color: #333333;
+  }
+
+  .view-all {
+    font-size: 24px;
+    background-color: #1a1a1a;
+    color: #ffffff;
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 30px;
+  }
+
+  .category-image {
+    width: 100%;
+    height: 380px;
+    border-radius: 16px;
+    object-fit: cover;
+  }
+
+  .footer-spacer {
+    height: 160px;
+  }
+</style>

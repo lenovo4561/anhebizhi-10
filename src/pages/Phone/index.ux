@@ -1,0 +1,249 @@
+<template>
+  <div class="phone-container">
+    <image class="bg" src="/img/loading-bg.png"></image>
+    
+    <list class="scroll-list">
+      <!-- 标题 -->
+      <list-item type="title" class="title-item">
+        <text class="title">手机壁纸</text>
+      </list-item>
+
+      <!-- 热门壁纸 -->
+      <list-item type="hot" class="category-section">
+        <div class="category-header">
+          <div class="title-wrap">
+            <div class="title-bar"></div>
+            <text class="category-title">热门壁纸</text>
+          </div>
+          <text class="view-all" @click="goToList('rm', '热门壁纸')">查看全部</text>
+        </div>
+        <div class="image-grid">
+          <div class="wallpaper-wrap" for="{{hotList}}" @click="goToDetail('rm', $idx)">
+            <image class="wallpaper-item" src="{{$item}}"></image>
+          </div>
+        </div>
+      </list-item>
+
+      <!-- 萌宠壁纸 -->
+      <list-item type="pet" class="category-section">
+        <div class="category-header">
+          <div class="title-wrap">
+            <div class="title-bar"></div>
+            <text class="category-title">萌宠壁纸</text>
+          </div>
+          <text class="view-all" @click="goToList('mc', '萌宠壁纸')">查看全部</text>
+        </div>
+        <div class="image-grid">
+          <div class="wallpaper-wrap" for="{{petList}}" @click="goToDetail('mc', $idx)">
+            <image class="wallpaper-item" src="{{$item}}"></image>
+          </div>
+        </div>
+      </list-item>
+
+      <!-- 动漫壁纸 -->
+      <list-item type="anime" class="category-section">
+        <div class="category-header">
+          <div class="title-wrap">
+            <div class="title-bar"></div>
+            <text class="category-title">动漫壁纸</text>
+          </div>
+          <text class="view-all" @click="goToList('dm', '动漫壁纸')">查看全部</text>
+        </div>
+        <div class="image-grid">
+          <div class="wallpaper-wrap" for="{{animeList}}" @click="goToDetail('dm', $idx)">
+            <image class="wallpaper-item" src="{{$item}}"></image>
+          </div>
+        </div>
+      </list-item>
+
+      <!-- 人物壁纸 -->
+      <list-item type="character" class="category-section">
+        <div class="category-header">
+          <div class="title-wrap">
+            <div class="title-bar"></div>
+            <text class="category-title">人物壁纸</text>
+          </div>
+          <text class="view-all" @click="goToList('rw', '人物壁纸')">查看全部</text>
+        </div>
+        <div class="image-grid">
+          <div class="wallpaper-wrap" for="{{characterList}}" @click="goToDetail('rw', $idx)">
+            <image class="wallpaper-item" src="{{$item}}"></image>
+          </div>
+        </div>
+      </list-item>
+
+      <!-- 自然壁纸 -->
+      <list-item type="nature" class="category-section">
+        <div class="category-header">
+          <div class="title-wrap">
+            <div class="title-bar"></div>
+            <text class="category-title">自然壁纸</text>
+          </div>
+          <text class="view-all" @click="goToList('zr', '自然壁纸')">查看全部</text>
+        </div>
+        <div class="image-grid">
+          <div class="wallpaper-wrap" for="{{natureList}}" @click="goToDetail('zr', $idx)">
+            <image class="wallpaper-item" src="{{$item}}"></image>
+          </div>
+        </div>
+      </list-item>
+
+      <!-- 底部占位 -->
+      <list-item type="spacer" style="height: 200px;"></list-item>
+    </list>
+  </div>
+</template>
+
+<script>
+import router from '@system.router'
+
+export default {
+  data() {
+    return {
+      hotList: [
+        'https://cdn.shijinzhuang.com/ahbz/sjbz/rm/1.jpg',
+        'https://cdn.shijinzhuang.com/ahbz/sjbz/rm/2.jpg',
+        'https://cdn.shijinzhuang.com/ahbz/sjbz/rm/3.jpg',
+        'https://cdn.shijinzhuang.com/ahbz/sjbz/rm/4.jpg'
+      ],
+      petList: [
+        'https://cdn.shijinzhuang.com/ahbz/sjbz/mc/1.jpg',
+        'https://cdn.shijinzhuang.com/ahbz/sjbz/mc/2.jpg',
+        'https://cdn.shijinzhuang.com/ahbz/sjbz/mc/3.jpg',
+        'https://cdn.shijinzhuang.com/ahbz/sjbz/mc/4.jpg'
+      ],
+      animeList: [
+        'https://cdn.shijinzhuang.com/ahbz/sjbz/dm/1.jpg',
+        'https://cdn.shijinzhuang.com/ahbz/sjbz/dm/2.jpg',
+        'https://cdn.shijinzhuang.com/ahbz/sjbz/dm/3.jpg',
+        'https://cdn.shijinzhuang.com/ahbz/sjbz/dm/4.jpg'
+      ],
+      characterList: [
+        'https://cdn.shijinzhuang.com/ahbz/sjbz/rw/1.jpg',
+        'https://cdn.shijinzhuang.com/ahbz/sjbz/rw/2.jpg',
+        'https://cdn.shijinzhuang.com/ahbz/sjbz/rw/3.jpg',
+        'https://cdn.shijinzhuang.com/ahbz/sjbz/rw/4.jpg'
+      ],
+      natureList: [
+        'https://cdn.shijinzhuang.com/ahbz/sjbz/zr/1.jpg',
+        'https://cdn.shijinzhuang.com/ahbz/sjbz/zr/2.jpg',
+        'https://cdn.shijinzhuang.com/ahbz/sjbz/zr/3.jpg',
+        'https://cdn.shijinzhuang.com/ahbz/sjbz/zr/4.jpg'
+      ]
+    }
+  },
+  goToList(category, title) {
+    router.push({
+      uri: '/pages/WallpaperList',
+      params: {
+        category: category,
+        title: title,
+        type: 'phone'
+      }
+    })
+  },
+  goToDetail(category, index) {
+    router.push({
+      uri: '/pages/WallpaperDetail',
+      params: {
+        category: category,
+        initialId: index + 1,
+        type: 'phone'
+      }
+    })
+  }
+}
+</script>
+
+<style>
+  .phone-container {
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+  }
+
+  .bg {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .title {
+    font-size: 48px;
+    font-weight: bold;
+    color: #333333;
+    text-align: center;
+    padding: 40px 0;
+  }
+
+  .title-item {
+    justify-content: center;
+  }
+
+  .scroll-list {
+    flex: 1;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .category-section {
+    flex-direction: column;
+    padding: 0 30px;
+    margin-bottom: 40px;
+  }
+
+  .category-header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+  }
+
+  .title-wrap {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .title-bar {
+    width: 8px;
+    height: 44px;
+    background-color: #3cc2fa;
+    border-radius: 4px;
+    margin-right: 16px;
+  }
+
+  .category-title {
+    font-size: 42px;
+    font-weight: bold;
+    color: #333333;
+  }
+
+  .view-all {
+    font-size: 28px;
+    background-color: #1a1a1a;
+    color: #ffffff;
+    padding: 16px 36px;
+    border-radius: 40px;
+  }
+
+  .image-grid {
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+
+  .wallpaper-wrap {
+    margin-right: 20px;
+  }
+
+  .wallpaper-item {
+    width: 230px;
+    height: 306px;
+    border-radius: 20px;
+    object-fit: cover;
+  }
+</style>

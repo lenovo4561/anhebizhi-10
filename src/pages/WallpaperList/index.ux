@@ -1,0 +1,172 @@
+<template>
+  <div class="container">
+    <image class="bg" src="/img/loading-bg.png"></image>
+
+    <!-- 自定义顶部导航栏 -->
+    <div class="title-bar">
+      <div class="back-btn" @click="back">
+        <image class="back-icon" src="/img/back.png"></image>
+      </div>
+      <text class="page-title">{{ title }}</text>
+      <div class="placeholder-btn"></div>
+    </div>
+
+    <!-- 壁纸网格列表 -->
+    <list class="wallpaper-list">
+      <list-item type="wallpapers" class="wallpaper-grid">
+        <div 
+          class="wallpaper-item {{type === 'computer' ? 'computer-item' : ''}}" 
+          for="{{wallpapers}}"
+          @click="viewDetail($item)"
+        >
+          <image class="wallpaper-image" src="{{$item.url}}"></image>
+        </div>
+      </list-item>
+
+      <!-- 底部占位 -->
+      <list-item type="spacer" style="height: 40px;"></list-item>
+    </list>
+  </div>
+</template>
+
+<script>
+import router from '@system.router'
+
+const BASE_URL_PHONE = 'https://cdn.shijinzhuang.com/ahbz/sjbz'
+const BASE_URL_COMPUTER = 'https://cdn.shijinzhuang.com/ahbz/dnbz'
+
+const CATEGORY_CONFIG = {
+  'rm': { path: 'rm', count: 20 },
+  'dm': { path: 'dm', count: 20 },
+  'mc': { path: 'mc', count: 20 },
+  'rw': { path: 'rw', count: 20 },
+  'zr': { path: 'zr', count: 20 }
+}
+
+export default {
+  protected: {
+    category: '',
+    title: '壁纸列表',
+    type: 'phone'
+  },
+  private: {
+    wallpapers: []
+  },
+  onInit() {
+    // 根据分类生成壁纸列表
+    this.generateWallpapers()
+  },
+  generateWallpapers() {
+    const config = CATEGORY_CONFIG[this.category]
+    if (!config) return
+    
+    const baseUrl = this.type === 'computer' ? BASE_URL_COMPUTER : BASE_URL_PHONE
+    const list = []
+    for (let i = 1; i <= config.count; i++) {
+      list.push({
+        id: i,
+        url: `${baseUrl}/${config.path}/${i}.jpg`
+      })
+    }
+    this.wallpapers = list
+  },
+  viewDetail(item) {
+    router.push({
+      uri: '/pages/WallpaperDetail',
+      params: {
+        category: this.category,
+        initialId: item.id,
+        type: this.type
+      }
+    })
+  },
+  back() {
+    router.back()
+  }
+}
+</script>
+
+<style>
+.container {
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+.bg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 顶部导航栏 */
+.title-bar {
+  height: 100px;
+  padding: 0 30px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.back-btn {
+  width: 60px;
+  height: 60px;
+  justify-content: center;
+  align-items: center;
+}
+
+.back-icon {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.page-title {
+  font-size: 42px;
+  color: #333333;
+  font-weight: bold;
+}
+
+.placeholder-btn {
+  width: 60px;
+  height: 60px;
+}
+
+/* 壁纸列表 */
+.wallpaper-list {
+  flex: 1;
+  flex-direction: column;
+  padding-top: 20px;
+}
+
+.wallpaper-grid {
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 0 30px;
+}
+
+.wallpaper-item {
+  width: 495px;
+  height: 880px;
+  margin-bottom: 30px;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.wallpaper-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.computer-item {
+  width: 100%;
+  height: 580px;
+}
+</style>
