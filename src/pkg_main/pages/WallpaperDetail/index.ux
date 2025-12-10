@@ -1,12 +1,17 @@
 <template>
   <div class="container">
+    <!-- 模糊背景层 -->
+    <div class="blur-bg" if="{{isComputer}}">
+      <image class="blur-image" src="{{currentUrl}}" object-fit="cover"></image>
+    </div>
+
     <!-- 图片展示区域 (全屏背景) -->
     <div class="image-wrapper {{isComputer ? 'computer-mode' : ''}}" style="{{computerStyle}}">
-      <image class="main-image" src="{{currentUrl}}" object-fit="{{isComputer ? 'fill' : 'cover'}}"></image>
+      <image class="main-image {{isComputer ? 'computer-image' : ''}}" src="{{currentUrl}}" object-fit="{{isComputer ? 'contain' : 'cover'}}"></image>
     </div>
 
     <!-- 顶部导航 -->
-    <div class="nav-bar" show="{{!isComputer}}">
+    <div class="nav-bar">
       <div class="back-btn" @click="goBack">
         <image class="back-icon" src="/pkg_main/img/back.png"></image>
       </div>
@@ -21,20 +26,20 @@
     </div>
 
     <!-- 底部操作栏 -->
-    <div class="bottom-bar {{isComputer ? 'computer-bottom-bar' : ''}}">
-      <!-- 下载按钮 -->
-      <div class="action-btn download-btn {{isComputer ? 'computer-btn' : ''}}" @click="downloadWallpaper">
-        <image class="btn-icon" src="/pkg_main/img/xiazai.png"></image>
-        <text class="btn-text">下载</text>
-      </div>
-
+    <div class="bottom-bar {{isComputer ? 'computer-bottom-bar' : 'phone-bottom-bar'}}">
       <!-- 收藏按钮 -->
       <div class="action-btn favorite-btn {{isComputer ? 'computer-btn' : ''}}" @click="toggleFavorite">
         <image
-          class="btn-icon"
+          class="btn-icon {{isComputer ? 'computer-btn-icon' : ''}}"
           src="{{isFavorite ? '/pkg_main/img/like-s.png' : '/pkg_main/img/shoucang-u.png'}}"
         ></image>
-        <text class="btn-text">{{ isFavorite ? '已收藏' : '收藏' }}</text>
+        <text class="btn-text {{isComputer ? 'computer-btn-text' : ''}}">{{ isFavorite ? '已收藏' : '收藏' }}</text>
+      </div>
+
+      <!-- 下载按钮 -->
+      <div class="action-btn download-btn {{isComputer ? 'computer-btn' : ''}}" @click="downloadWallpaper">
+        <image class="btn-icon {{isComputer ? 'computer-btn-icon' : ''}}" src="/pkg_main/img/xiazai.png"></image>
+        <text class="btn-text {{isComputer ? 'computer-btn-text' : ''}}">下载</text>
       </div>
     </div>
   </div>
@@ -338,8 +343,7 @@ export default {
 
 .arrow-btn {
   position: absolute;
-  top: 50%;
-  margin-top: -9px;
+  top: 280px;
   width: 19px;
   height: 19px;
   justify-content: center;
@@ -371,8 +375,11 @@ export default {
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-  background-color: #ffffff;
   z-index: 10;
+}
+
+.phone-bottom-bar {
+  background-color: #ffffff;
 }
 
 .action-btn {
@@ -405,19 +412,52 @@ export default {
 }
 
 .computer-mode {
-  /* 不旋转，直接铺满 */
+  justify-content: center;
+  align-items: center;
+}
+
+.computer-image {
+  width: 100%;
+  height: auto;
 }
 
 .computer-bottom-bar {
-  background-color: #ffffff;
-  height: 42px;
-  padding-bottom: 9px;
+  background-color: rgba(0, 0, 0, 0);
+  height: 130px;
+  bottom: 0;
+  padding-bottom: 30px;
 }
 
 .computer-btn {
-  width: 97px;
-  height: 23px;
-  border-radius: 12px;
-  background-color: #9bfad9;
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+  background-color: #66e6cc;
+  flex-direction: column;
+}
+
+.computer-btn-icon {
+  width: 18px;
+  height: 18px;
+  margin-bottom: 2px;
+}
+
+.computer-btn-text {
+  font-size: 10px;
+  color: #000000;
+}
+
+.blur-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.blur-image {
+  width: 100%;
+  height: 100%;
+  filter: blur(30px);
 }
 </style>
