@@ -68,7 +68,8 @@ export default {
   protected: {
     category: 'rm',
     initialId: 1,
-    type: 'phone'
+    type: 'phone',
+    favoriteUrl: ''
   },
   private: {
     wallpapers: [],
@@ -95,8 +96,16 @@ export default {
   },
   onInit() {
     this.generateWallpapers()
-    // Find index based on initialId
-    const index = this.wallpapers.findIndex(item => item.id == this.initialId)
+    // Find index based on favoriteUrl or initialId
+    let index = -1
+    if (this.favoriteUrl) {
+      // 从收藏页进入，使用 URL 查找
+      index = this.wallpapers.findIndex(item => item.url === this.favoriteUrl)
+    }
+    if (index === -1) {
+      // 使用 initialId 查找
+      index = this.wallpapers.findIndex(item => item.id == this.initialId)
+    }
     if (index !== -1) {
       this.currentIndex = index
     }
@@ -163,6 +172,7 @@ export default {
     const currentUrl = this.currentUrl
     if (!currentUrl) return
 
+    const self = this
     storage.get({
       key: 'wallpaper_favorites',
       success: data => {
@@ -174,47 +184,72 @@ export default {
         if (index > -1) {
           // Remove from favorites
           favorites.splice(index, 1)
-          this.isFavorite = false
-          prompt.showToast({
-            message: '已取消收藏'
+          // Save to storage
+          storage.set({
+            key: 'wallpaper_favorites',
+            value: JSON.stringify(favorites),
+            success: () => {
+              self.isFavorite = false
+              prompt.showToast({
+                message: '已取消收藏'
+              })
+            },
+            fail: () => {
+              prompt.showToast({
+                message: '取消收藏失败'
+              })
+            }
           })
         } else {
           // Add to favorites
           favorites.push({
             url: currentUrl,
-            category: this.category,
-            type: this.type,
+            category: self.category,
+            type: self.type,
             timestamp: Date.now()
           })
-          this.isFavorite = true
-          prompt.showToast({
-            message: '已添加到收藏'
+          // Save to storage
+          storage.set({
+            key: 'wallpaper_favorites',
+            value: JSON.stringify(favorites),
+            success: () => {
+              self.isFavorite = true
+              prompt.showToast({
+                message: '已添加到收藏'
+              })
+            },
+            fail: () => {
+              prompt.showToast({
+                message: '收藏失败'
+              })
+            }
           })
         }
-
-        // Save to storage
-        storage.set({
-          key: 'wallpaper_favorites',
-          value: JSON.stringify(favorites)
-        })
       },
       fail: () => {
         // First time
         const favorites = [
           {
             url: currentUrl,
-            category: this.category,
-            type: this.type,
+            category: self.category,
+            type: self.type,
             timestamp: Date.now()
           }
         ]
-        this.isFavorite = true
         storage.set({
           key: 'wallpaper_favorites',
-          value: JSON.stringify(favorites)
-        })
-        prompt.showToast({
-          message: '已添加到收藏'
+          value: JSON.stringify(favorites),
+          success: () => {
+            self.isFavorite = true
+            prompt.showToast({
+              message: '已添加到收藏'
+            })
+          },
+          fail: () => {
+            prompt.showToast({
+              message: '收藏失败'
+            })
+          }
         })
       }
     })

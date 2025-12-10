@@ -113,11 +113,19 @@ export default {
     })
   },
   goToDetail(item) {
+    // 从 URL 中提取图片 ID
+    let initialId = 1
+    if (item.url) {
+      const match = item.url.match(/(\d+)\.jpg$/)
+      if (match) {
+        initialId = parseInt(match[1])
+      }
+    }
     router.push({
       uri: '/pkg_main/pages/WallpaperDetail',
       params: {
         category: item.category,
-        initialId: 1,
+        initialId: initialId,
         type: item.type || 'phone',
         favoriteUrl: item.url
       }
