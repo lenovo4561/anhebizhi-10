@@ -296,6 +296,24 @@ export default {
   height: 100%;
 }
 
+/* 电脑壁纸居中圆角展示 */
+.computer-image-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200px;
+  height: 280px;
+  transform: translate(-50%, -55%);
+  border-radius: 10px;
+  overflow: hidden;
+  z-index: 5;
+}
+
+.computer-main-image {
+  width: 100%;
+  height: 100%;
+}
+
 .nav-bar {
   height: 23px;
   padding-top: 9px;
@@ -373,7 +391,7 @@ export default {
   width: 100%;
   height: 35px;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
   z-index: 10;
 }
@@ -411,53 +429,61 @@ export default {
   font-weight: bold;
 }
 
-.computer-mode {
-  justify-content: center;
-  align-items: center;
-}
-
-.computer-image {
-  width: 100%;
-  height: auto;
-}
-
+/* 电脑壁纸底部栏样式 */
 .computer-bottom-bar {
-  background-color: rgba(0, 0, 0, 0);
-  height: 130px;
-  bottom: 0;
-  padding-bottom: 30px;
+  background-color: transparent;
+  height: 60px;
+  bottom: 20px;
+  justify-content: center;
 }
 
 .computer-btn {
-  width: 50px;
-  height: 50px;
-  border-radius: 25px;
-  background-color: #66e6cc;
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  background-color: #4de8d0;
   flex-direction: column;
+  margin-left: 15px;
+  margin-right: 15px;
 }
 
 .computer-btn-icon {
-  width: 18px;
-  height: 18px;
-  margin-bottom: 2px;
+  width: 14px;
+  height: 14px;
+  margin-right: 0;
+  margin-bottom: 1px;
 }
 
 .computer-btn-text {
-  font-size: 10px;
+  font-size: 8px;
   color: #000000;
 }
 
+/* 模糊背景层 */
 .blur-bg {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+  z-index: 0;
 }
 
 .blur-image {
+  width: 150%;
+  height: 150%;
+  position: absolute;
+  top: -25%;
+  left: -25%;
+  filter: blur(50px);
+}
+
+.blur-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  filter: blur(30px);
+  background-color: rgba(0, 0, 0, 0.2);
 }
 </style>
